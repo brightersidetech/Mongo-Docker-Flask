@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Student Information</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+</head>
+<body>
+
+<table id="results_table">
+  <tr>
+      <th>Student Number</th>
+      <th>Student Name</th>
+      <th>Student Grade</th>
+  </tr>
+    {% for key, value in dict.items() %}
+        <tr>
+            <td><a href="http://127.0.0.1:5000/edit/{{ key }}">{{ key }}</a> </td>
+            <td>{{ value[0] }}</td>
+            <td>{{ value[1] }}</td>
+        </tr>
+    {% endfor %}
+
+</table>
+
+<a href="http://127.0.0.1:5000 "><button>Go to Home</button></a>
+
+</body>
+</html>

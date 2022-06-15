@@ -35,7 +35,7 @@ def db_update_record(key_val, record):
     status = storage.update_one(
         {key_val: record['snumber']},
         {
-            "$set": {'grds': record}
+            "$set": {'Name': record['sname'], 'Grade': record['sgrade']}
         }
     )
     print('inside database_update_entry', key_val, record)
@@ -45,6 +45,12 @@ def db_update_record(key_val, record):
 def index():
     return render_template('index.html')
 
+# just for testing
+@app.route('/details')
+def details():
+    all_results = {}
+    all_results['741'] = ['test name', '20']
+    return render_template('details.html', dict = all_results)
 
 @app.route('/data', methods=['POST'])
 def process_data():
@@ -60,15 +66,45 @@ def process_data():
     # list of all collections in the database
     print(db.list_collection_names())
     db_store_record(result)
-    return render_template('index.html')
+
+    ########################
+    new_results = {}
+    for document in db.storage.find():
+        print(document['Number'])
+        new_results[document['Number']] = [document['Name'], document['Grade']]
+    print(new_results)
+    ########################
+    return render_template('details.html', dict = new_results)
 
 @app.route('/update', methods=['POST'])
 def update_data():
     result = request.form
-    first_name = result['fname']
-    last_name = result['lname']
+    student_number = result['snumber']
+    student_name = result['sname']
+    student_grade = result['sgrade']
 
-    return render_template('index.html')
+    print(student_number)
+    print(student_name)
+    print(student_grade)
+
+    db_update_record('Number', result)
+
+    all_results = {}
+    for document in db.storage.find():
+        print(document['Number'])
+        all_results[document['Number']] = [document['Name'], document['Grade']]
+    print(all_results)
+    ########################
+    return render_template('details.html', dict = all_results)
+
+@app.route('/edit/<string:q>')
+def edit_data(q):
+    print(q)
+    Queryresult = storage.find_one({"Number": q})
+    print(Queryresult)
+    current_results = {}
+    current_results[Queryresult['Number']] = [Queryresult['Name'], Queryresult['Grade']]
+    return render_template('edit.html', dict = current_results)
 
 if __name__ == '__main__':
     app.run(debug = True)
