@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Student Information</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+</head>
+<body>
+
+ <form id="main_form" action="http://localhost:5000/data" method="POST">
+     <label for="snumber">Student Number:</label><br>
+     <input type="text" id="snumber" name="snumber"><br>
+     <label for="sname">Student Name:</label><br>
+     <input type="text" id="sname" name="sname"><br>
+     <label for="sgrade">Student Grade:</label><br>
+     <input type="text" id="sgrade" name="sgrade"><br><br>
+     <input type="submit" value="Submit">
+</form>
+
+</body>
+</html>
