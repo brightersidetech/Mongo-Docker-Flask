@@ -10,7 +10,7 @@
  <form id="main_form" action="http://localhost:5000/update" method="POST">
      {% for key, value in dict.items() %}
      <label for="snumber">Student Number:</label><br>
-     <input type="text" id="snumber" name="snumber" value={{ key }} ><br>
+     <input type="text" id="snumber" name="snumber" value={{ key }} readonly><br>
      <label for="sname">Student Name:</label><br>
      <input type="text" id="sname" name="sname" value={{ value[0] }}><br>
      <label for="sgrade">Student Grade:</label><br>
